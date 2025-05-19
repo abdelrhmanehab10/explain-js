@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial state
   let useCapture = false; // Start with bubbling phase (false)
   let logCount = 0;
-  let highlightedElements = []; // Track elements that have been highlighted
 
   // Function to add event listeners based on current mode
   function setupEventListeners() {
@@ -87,36 +86,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Function to highlight clicked element
   function highlightElement(element) {
-    // Store original background color and element for later reset
+    // Store original background color
     const originalColor = element.style.backgroundColor;
-
-    // Add to highlighted elements array with its original color
-    highlightedElements.push({
-      element: element,
-      originalColor: originalColor,
-    });
 
     // Highlight effect
     element.style.backgroundColor = useCapture ? "#ffcdd2" : "#b3e5fc";
 
-    // If this is the target element (where the event originated)
-    // Schedule a reset of all highlighted elements after the event propagation
-    if (element === child && !useCapture) {
-      // For bubbling (inner to outer), reset after child (innermost) is processed
-      setTimeout(resetAllHighlightedElements, 300);
-    } else if (element === grandparent && useCapture) {
-      // For capturing (outer to inner), reset after grandparent (outermost) is processed
-      setTimeout(resetAllHighlightedElements, 300);
-    }
-  }
-
-  // Function to reset all highlighted elements
-  function resetAllHighlightedElements() {
-    highlightedElements.forEach((item) => {
-      item.element.style.backgroundColor = item.originalColor;
-    });
-    // Clear the array after resetting
-    highlightedElements = [];
+    // Reset after animation
+    setTimeout(() => {
+      element.style.backgroundColor = originalColor;
+    }, 300);
   }
 
   // Toggle between bubbling and capturing
