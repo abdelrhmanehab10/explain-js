@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // DOM Elements
   const grandparent = document.getElementById("grandparent");
   const parent = document.getElementById("parent");
   const child = document.getElementById("child");
@@ -7,26 +6,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const toggleModeBtn = document.getElementById("toggle-mode");
   const clearLogsBtn = document.getElementById("clear-logs");
 
-  // Initial state
-  let useCapture = false; // Start with bubbling phase (false)
+  let useCapture = false;
   let logCount = 0;
 
-  // Function to add event listeners based on current mode
   function setupEventListeners() {
-    // Remove existing event listeners first
     removeEventListeners();
 
-    // Add new event listeners with current useCapture value
     grandparent.addEventListener("click", handleGrandparentClick, useCapture);
     parent.addEventListener("click", handleParentClick, useCapture);
     child.addEventListener("click", handleChildClick, useCapture);
 
-    // Update button text
     toggleModeBtn.textContent = `Current Mode: ${
       useCapture ? "Capturing" : "Bubbling"
     }`;
 
-    // Update demo box styling
     const demoBox = document.querySelector(".demo-box");
     if (useCapture) {
       demoBox.classList.remove("bubbling");
@@ -37,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Function to remove event listeners
   function removeEventListeners() {
     grandparent.removeEventListener(
       "click",
@@ -48,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
     child.removeEventListener("click", handleChildClick, useCapture);
   }
 
-  // Event handlers
   function handleGrandparentClick(event) {
     logEvent("Grandparent", event);
     highlightElement(grandparent);
@@ -64,14 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
     highlightElement(child);
   }
 
-  // Function to log events
-  function logEvent(elementName, event) {
+  function logEvent(elementName) {
     logCount++;
     const logEntry = document.createElement("div");
     logEntry.classList.add("log-entry");
     logEntry.classList.add(useCapture ? "capturing-log" : "bubbling-log");
 
-    // Create timestamp
     const now = new Date();
     const timestamp = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}.${now.getMilliseconds()}`;
 
@@ -79,31 +68,22 @@ document.addEventListener("DOMContentLoaded", () => {
       useCapture ? "⬇️ Capturing" : "⬆️ Bubbling"
     }: ${elementName} element was triggered`;
 
-    // Add to log container and scroll to bottom
     logContainer.appendChild(logEntry);
     logContainer.scrollTop = logContainer.scrollHeight;
   }
 
-  // Function to highlight clicked element
   function highlightElement(element) {
-    // Store original background color
-    const originalColor = element.style.backgroundColor;
-
-    // Highlight effect
     element.style.backgroundColor = useCapture ? "#ffcdd2" : "#b3e5fc";
 
-    // Reset after animation
     setTimeout(() => {
-      element.style.backgroundColor = originalColor;
+      element.style.backgroundColor = "";
     }, 300);
   }
 
-  // Toggle between bubbling and capturing
   toggleModeBtn.addEventListener("click", () => {
     useCapture = !useCapture;
     setupEventListeners();
 
-    // Add a log entry about mode change
     const logEntry = document.createElement("div");
     logEntry.classList.add("log-entry");
     logEntry.style.backgroundColor = "#e8f5e9";
@@ -116,16 +96,13 @@ document.addEventListener("DOMContentLoaded", () => {
     logContainer.scrollTop = logContainer.scrollHeight;
   });
 
-  // Clear logs
   clearLogsBtn.addEventListener("click", () => {
     logContainer.innerHTML = "";
     logCount = 0;
   });
 
-  // Initial setup
   setupEventListeners();
 
-  // Add initial instruction log
   const initialLog = document.createElement("div");
   initialLog.classList.add("log-entry");
   initialLog.style.backgroundColor = "#e8f5e9";
