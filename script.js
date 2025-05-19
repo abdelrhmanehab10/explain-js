@@ -42,17 +42,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function handleGrandparentClick(event) {
     logEvent("Grandparent", event);
-    highlightElement(grandparent);
+    const delay = useCapture ? 0 : 400;
+    highlightElement(grandparent, delay);
   }
 
   function handleParentClick(event) {
     logEvent("Parent", event);
-    highlightElement(parent);
+    const delay = 200;
+    highlightElement(parent, delay);
   }
 
   function handleChildClick(event) {
     logEvent("Child", event);
-    highlightElement(child);
+    const delay = useCapture ? 400 : 0;
+    highlightElement(child, delay);
   }
 
   function logEvent(elementName) {
@@ -72,12 +75,14 @@ document.addEventListener("DOMContentLoaded", () => {
     logContainer.scrollTop = logContainer.scrollHeight;
   }
 
-  function highlightElement(element) {
-    element.style.backgroundColor = useCapture ? "#ffcdd2" : "#b3e5fc";
-
+  function highlightElement(element, delay = 0) {
     setTimeout(() => {
-      element.style.backgroundColor = "";
-    }, 300);
+      element.style.backgroundColor = useCapture ? "#ffcdd2" : "#b3e5fc";
+
+      setTimeout(() => {
+        element.style.backgroundColor = "";
+      }, 300);
+    }, delay);
   }
 
   toggleModeBtn.addEventListener("click", () => {
