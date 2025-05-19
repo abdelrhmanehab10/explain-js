@@ -113,45 +113,27 @@
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Event Bubbling and Capturing Demo</h1>
+    <div class="controls">
+      <button id="toggle-mode">Current Mode: Bubbling</button>
+      <button id="clear-logs" class="clear-btn">Clear Logs</button>
+    </div>
 
-      <div class="explanation">
-        <h2>What are Event Bubbling and Capturing?</h2>
-        <p>
-          When an event occurs on an element, it first runs the handlers on it,
-          then on its parent, then all the way up on other ancestors. This is
-          called <strong>bubbling</strong>.
-        </p>
-        <p>
-          The <strong>capturing</strong> phase is the opposite of bubbling. The
-          event first triggers on the outermost ancestor, then moves inward to
-          the target element.
-        </p>
-      </div>
-
-      <div class="controls">
-        <button id="toggle-mode">Current Mode: Bubbling</button>
-        <button id="clear-logs" class="clear-btn">Clear Logs</button>
-      </div>
-
-      <div class="demo-area">
-        <div class="demo-box bubbling">
-          <h3>Click on any element below:</h3>
-          <div class="element grandparent" id="grandparent">
-            Grandparent
-            <div class="element parent" id="parent">
-              Parent
-              <div class="element child" id="child">Child</div>
-            </div>
+    <div class="demo-area">
+      <div class="demo-box bubbling">
+        <h3>Click on any element below:</h3>
+        <div class="element grandparent" id="grandparent">
+          Grandparent
+          <div class="element parent" id="parent">
+            Parent
+            <div class="element child" id="child">Child</div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="log-area">
-        <h3>Event Log:</h3>
-        <div class="log-container" id="log-container"></div>
-      </div>
+    <div class="log-area">
+      <h3>Event Log:</h3>
+      <div class="log-container" id="log-container"></div>
     </div>
 
     <script src="script.js"></script>
